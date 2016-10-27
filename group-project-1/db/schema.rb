@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20161027002520) do
   create_table "supplies", force: :cascade do |t|
     t.string   "name"
     t.integer  "quantity"
-    t.integer  "unit_cost"
+    t.float    "unit_cost"
     t.integer  "task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -1,0 +1,21 @@
+<h1>Create a Supply</h1>
+<% if @supply.errors.any? %>
+ <div id="error_explanation">
+   <h4>
+     <%= pluralize(@supply.errors.count, "error") %>
+     prohibited this supply from being saved:
+   </h4>
+   <ul>
+   <% @supply.errors.full_messages.each do |msg| %>
+     <li><%= msg %></li>
+   <% end %>
+   </ul>
+ </div>
+<% end %>
+
+<%= form_for @supply do |f| %>
+Name: <%= f.text_field :name %><br>
+Quantity: <%= f.number_field :quantity %><br>
+Unit Cost: <%= f.number_field :unit_cost %><br>
+<%= f.submit %>
+<% end %>

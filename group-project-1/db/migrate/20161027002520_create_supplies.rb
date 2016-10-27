@@ -3,7 +3,7 @@ class CreateSupplies < ActiveRecord::Migration[5.0]
     create_table :supplies do |t|
       t.string :name
       t.integer :quantity
-      t.integer :unit_cost
+      t.float :unit_cost
       t.integer :task_id
 
       t.timestamps

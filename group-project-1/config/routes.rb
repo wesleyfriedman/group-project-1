@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
 
-  root 'users#new'
+  root 'welcome#index'
   resources :supplies
   resources :tasks
   resources :event_users
   resources :events
   resources :users
-  resources :sessions, except: [:new, :create]
+  # resources :sessions, except: [:new, :create]
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
