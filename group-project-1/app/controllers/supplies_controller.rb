@@ -25,7 +25,7 @@ class SuppliesController < ApplicationController
 	private
 
 	def supply_params
-		params.require(:supply).permit(:name, :quantity, :unit_cost)
+		params.require(:supply).permit(:name, :quantity, :unit_cost, :task_id)
 	end
 
 end

@@ -1,0 +1,23 @@
+<h1>Update User</h1>
+<% if @user.errors.any? %>
+ <div id="error_explanation">
+   <h4>
+     <%= pluralize(@user.errors.count, "error") %>
+     prohibited this user from being saved:
+   </h4>
+   <ul>
+   <% @user.errors.full_messages.each do |msg| %>
+     <li><%= msg %></li>
+   <% end %>
+   </ul>
+ </div>
+<% end %>
+<%= form_for @user do |f| %>
+Name: <%= f.text_field :name %><br>
+Email: <%= f.email_field :email %><br>
+Phone Number: <%= f.telephone_field :phone_number %><br>
+Password: <%= f.password_field :password %><br>
+Password Confirmation: <%= f.password_field :password_confirmation %><br>
+<%= f.submit "Update User" %>
+<% end %>
+<%= button_to "Delete", @user, method: :delete, data: { confirm: "Bye Felicia" }  %>

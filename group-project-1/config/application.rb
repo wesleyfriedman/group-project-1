@@ -13,3 +13,7 @@ module GroupProject1
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+
+
+# config.time_zone = 'Eastern Time (US & Canada)'
+# config.active_record.default_timezone = 'Eastern Time (US & Canada)'

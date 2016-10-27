@@ -1,0 +1,23 @@
+<h1>Update Event</h1>
+<% if @event.errors.any? %>
+ <div id="error_explanation">
+   <h4>
+     <%= pluralize(@event.errors.count, "error") %>
+     prohibited this event from being saved:
+   </h4>
+   <ul>
+   <% @event.errors.full_messages.each do |msg| %>
+     <li><%= msg %></li>
+   <% end %>
+   </ul>
+ </div>
+<% end %>
+<%= form_for @event do |f| %>
+Name: <%= f.text_field :name %><br>
+Starts at: <%= f.datetime_select :start_date%><br>
+Ends at: <%= f.datetime_select :end_date%><br>
+Address: <%= f.text_field :address %><br>
+Description: <%= f.text_area :description %><br>
+<%= f.submit "Update Event" %>
+<% end %>
+<%= button_to "Delete", @event, method: :delete, data: { confirm: "No RSVPs?" }  %>
