@@ -4,6 +4,7 @@ class CreateSupplies < ActiveRecord::Migration[5.0]
       t.string :name
       t.integer :quantity
       t.integer :unit_cost
+      t.integer :task_id
 
       t.timestamps
     end

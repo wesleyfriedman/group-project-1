@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 20161027002520) do
   create_table "event_users", force: :cascade do |t|
     t.integer  "event_id"
     t.integer  "user_id"
-    t.boolean  "host"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "host",       default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "events", force: :cascade do |t|
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20161027002520) do
     t.string   "name"
     t.integer  "quantity"
     t.integer  "unit_cost"
+    t.integer  "task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
