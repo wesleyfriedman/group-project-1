@@ -1,10 +1,16 @@
 class UsersController < ApplicationController
+	skip_before_action :require_login, only: [:new, :create]
 
 	# def index --> admin?
 	# end
 
 	def show
 		@user = User.find(params[:id])
+		if current_user.id == @user.id
+
+		else
+			redirect_to user_path(current_user)
+		end	
 	end
 
 	def new
@@ -23,6 +29,10 @@ class UsersController < ApplicationController
 
 	def edit
 		@user = User.find(params[:id])
+		if current_user.id == @user.id
+		else
+			redirect_to user_path(current_user)
+		end
 	end
 
 	def update
