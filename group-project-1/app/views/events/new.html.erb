@@ -15,7 +15,7 @@
 <%= form_for @event do |f| %>
 Name: <%= f.text_field :name %><br>
 Starts at: <%= f.datetime_select :start_date%><br>
-Ends at: <%= f.datetime_select :end_date%><br>
+Ends at: <%= f.datetime_select :end_date %><br>
 Address: <%= f.text_field :address %><br>
 Description: <%= f.text_area :description %><br>
 <%= f.submit "Create an Event" %>
