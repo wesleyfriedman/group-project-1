@@ -45,8 +45,6 @@ class EventsController < ApplicationController
 	def destroy
 		Event.find(params[:id]).destroy
 		redirect_to user_path(session[:user_id])
-		#redirect to user show page
-		# using session[:user_id]
 	end
 
 	private
