@@ -20,6 +20,7 @@
 		<% @users.each do |user| %>
 			Assign to a guest: <%= f.select user.name %><br>
 		<% end %>
+		<!-- may need to an else statement saying that you cannot add tasks until a user is attending -->
 	<% end %>
 	<%= f.submit "Create" %>
 <% end %>
