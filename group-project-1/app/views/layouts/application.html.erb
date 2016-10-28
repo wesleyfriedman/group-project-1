@@ -2,16 +2,17 @@
 <html>
   <head>
     <title>GroupProject1</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+  <div class="container-fluid">
   <body>
     <%= yield %>
   </body>
   <% if session[:user_id] %>
   <%= button_to "Logout", logout_path %>
   <% end %>
+  </div>
 </html>

@@ -1,0 +1,11 @@
+LOG:  database system was shut down at 2016-10-27 20:54:20 EDT
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  database "group-project-1_development" does not exist
+FATAL:  database "group-project-1_development" does not exist
+FATAL:  database "group-project-1_development" does not exist
+FATAL:  database "group-project-1_development" does not exist
+FATAL:  database "group-project-1_development" does not exist
+FATAL:  database "group-project-1_development" does not exist
+FATAL:  database "rebeccayeyi" does not exist

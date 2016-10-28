@@ -1,17 +1,6 @@
-Welcome to Oddter - the event management platform for otters and people.
-
-*dancing otter*
-
-<%= button_to "Sign Up", new_user_path, method: :get %>
-<%= button_to "Login", login_path, method: :get %>
-
-
-
-
-
-
-
-
-
-
-
+<nav class="navbar navbar-light" style="background-color: #FFFFFF;">
+  <form class="form-inline float-xs-right">
+    <a class="btn btn-outline-success" href="<%= new_user_path %>" role="button">Sign Up</a>
+    <a class="btn btn-outline-success" href="<%= login_path %>" role="button">Login</a>
+  </form>
+</nav>
