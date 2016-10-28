@@ -9,4 +9,8 @@ class Task < ApplicationRecord
 		event.name
 	end
 
+	def find_user
+		User.find(self.user_id).name 
+	end
+
 end

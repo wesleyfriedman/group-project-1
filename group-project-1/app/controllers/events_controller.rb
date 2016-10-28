@@ -5,7 +5,10 @@ class EventsController < ApplicationController
 	end
 
 	def show
+		byebug
+		@current_user = current_user.id
 		@event = Event.find(params[:id])
+		@tasks = @event.tasks
 	end
 
 	def new

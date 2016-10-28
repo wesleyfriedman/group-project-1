@@ -13,14 +13,14 @@
  </div>
 <% end %>
 
-<%= form_for @task do |f| %>
-	Name: <%= f.text_field :name %><br>
-	Description: <%= f.text_area :description %><br>
-	<% if @users != nil%>
-		<% @users.each do |user| %>
-			Assign to a guest: <%= f.select user.name %><br>
-		<% end %>
-		<!-- may need to an else statement saying that you cannot add tasks until a user is attending -->
-	<% end %>
-	<%= f.submit "Create" %>
+<%= form_for [@event, @task] do |f|  %>
+Name: <%= f.text_field :name %><br>
+Description: <%= f.text_area :description %><br>
+Assign to: <select name="user_id">
+  <% @users.each do |user| %>
+  <option value="<%= user.id %>" >
+  <%= user.name %> </option>
+  <% end %>
+</select><br>
+<%= f.submit "Create" %>
 <% end %>

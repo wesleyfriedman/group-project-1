@@ -3,11 +3,18 @@ Starts at: <%= @event.date_format(@event.start_date)%><br>
 Ends at: <%= @event.date_format(@event.end_date)%><br>
 Address: <%= @event.address %>
 
-<%= form_tag({controller: 'tasks', :action => 'new'}, method: 'get') do %>
-	<%= hidden_field_tag :event_id, @event.id %>
-	<%= submit_tag 'Create Task' %>
-<% end %>
+<%= button_to "Create Task", new_event_task_path(@event.id), :method => 'get'  %>
 
+<h4> Attendees: </h4>
 <ul><% @event.users.each do |user| %>
-	<li><%= user.name %></li>
+	<%= user.name %>
 <% end %></ul>
+
+<% if @tasks%>
+	<% @tasks.each do |task| %>
+<div>
+	<%= task.find_user %> -
+	<%= task.description %><br>
+	<% end %>
+</div>
+<% end %>

@@ -9,16 +9,18 @@ class TasksController < ApplicationController
 
 	def new
 		@task = Task.new
-		@@event = Event.find(params[:event_id])
-		@users = @@event.users
+		@users = Event.find(params[:event_id]).users
+		@event = Event.find(params[:event_id])
 	end
 
 	def create
+		# byebug
 		@task = Task.new(task_params)
-		@task.event_id = @@event.id
-		if @task.save
-			redirect_to root_path
-			# redirect to event path
+		user = User.find(params[:user_id])
+		@task.event_id = params[:event_id]
+		@task.user_id = user.id
+			if @task.save
+			redirect_to event_path(params[:event_id])
 		else
 			render :new
 		end
