@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
 		else
 			redirect_to user_path(current_user)
-		end	
+		end
 	end
 
 	def new
@@ -38,10 +38,10 @@ class UsersController < ApplicationController
 	def update
 		@user = User.find(params[:id])
 		if @user.update(user_params)
-			redirect_to @user 
-		else 
-			render :edit 
-		end 
+			redirect_to @user
+		else
+			render :edit
+		end
 	end
 
 	def destroy

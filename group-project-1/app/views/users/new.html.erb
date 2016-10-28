@@ -1,4 +1,3 @@
-<h1>Sign Up</h1>
 <% if @user.errors.any? %>
  <div id="error_explanation">
    <h4>
@@ -12,11 +11,42 @@
    </ul>
  </div>
 <% end %>
-<%= form_for @user do |f| %>
-Name: <%= f.text_field :name %><br>
-Email: <%= f.email_field :email %><br>
-Phone Number: <%= f.telephone_field :phone_number %><br>
-Password: <%= f.password_field :password %><br>
-Password Confirmation: <%= f.password_field :password_confirmation %><br>
-<%= f.submit "Sign Up" %>
+<div class="container" style="padding-top:100px;">
+  <h1 style="font-family: courier ;">Sign Up</h1>
+  <br>
+<div class="form-group row">
+  <%= form_for @user do |f| %>
+  <label for="example-text-input" class="col-xs-2 col-form-label" style="font-family: courier ;">Name:</label>
+  <div class="col-xs-10">
+    <%= f.text_field :name %>
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-search-input" class="col-xs-2 col-form-label" style="font-family: courier ;">Email:</label>
+  <div class="col-xs-10">
+    <%= f.email_field :email %>  </div>
+</div>
+<div class="form-group row">
+  <label for="example-email-input" class="col-xs-2 col-form-label" style="font-family: courier ;">Phone Number:</label>
+  <div class="col-xs-10">
+    <%= f.telephone_field :phone_number %>
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-url-input" class="col-xs-2 col-form-label" style="font-family: courier ;">Password:</label>
+  <div class="col-xs-10">
+    <%= f.password_field :password %>
+  </div>
+</div>
+<div class="form-group row">
+  <label for="example-tel-input" class="col-xs-2 col-form-label" style="font-family: courier ;"> Confirmation:</label>
+  <div class="col-xs-10">
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <br>
+  <br>
+  <div class="col-xs-10">
+  <button type="submit" class="btn btn-secondary" style="font-family: courier ;">Sign Up</button></div>
+</div>
 <% end %>
+</div>
