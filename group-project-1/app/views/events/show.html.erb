@@ -2,3 +2,8 @@
 Starts at: <%= @event.date_format(@event.start_date)%><br>
 Ends at: <%= @event.date_format(@event.end_date)%><br>
 Address: <%= @event.address %>
+
+<%= form_tag({controller: 'tasks', :action => 'new'}, method: 'get') do %>
+	<%= hidden_field_tag :event_id, @event.id %>
+	<%= submit_tag 'Create Task' %>
+<% end %>

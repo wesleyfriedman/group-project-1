@@ -13,12 +13,12 @@ class SuppliesController < ApplicationController
 
 	def create
 		@supply = Supply.new(supply_params)
-		if @supply.save 
+		if @supply.save
 			redirect_to root_path
-			# redirect to event path 
-		else 
-			render :new 
-		end 
+			# redirect to event path
+		else
+			render :new
+		end
 	end
 
 	def edit
@@ -29,10 +29,10 @@ class SuppliesController < ApplicationController
 		@supply = Supply.find(params[:id])
 		if @supply.update(supply_params)
 			redirect_to root_path
-			# redirect to event path 
-		else 
+			# redirect to event path
+		else
 			render :edit
-		end 
+		end
 	end
 
 	def destroy

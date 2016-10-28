@@ -1,0 +1,25 @@
+<h1>Create Task</h1>
+<% if @task.errors.any? %>
+ <div id="error_explanation">
+   <h4>
+     <%= pluralize(@task.errors.count, "error") %>
+     prohibited this task from being saved:
+   </h4>
+   <ul>
+   <% @task.errors.full_messages.each do |msg| %>
+     <li><%= msg %></li>
+   <% end %>
+   </ul>
+ </div>
+<% end %>
+
+<%= form_for @task do |f| %>
+	Name: <%= f.text_field :name %><br>
+	Description: <%= f.text_area :description %><br>
+	<% if @users != nil%>
+		<% @users.each do |user| %>
+			Assign to a guest: <%= f.select user.name %><br>
+		<% end %>
+	<% end %>
+	<%= f.submit "Create" %>
+<% end %>
