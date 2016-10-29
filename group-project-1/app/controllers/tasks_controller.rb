@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
 
 	def index
+		@tasks = current_user
 	end
 
 	def show
@@ -8,6 +9,7 @@ class TasksController < ApplicationController
 	end
 
 	def new
+		@user = current_user
 		@task = Task.new
 		@users = Event.find(params[:event_id]).users
 		@event = Event.find(params[:event_id])

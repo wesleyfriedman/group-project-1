@@ -2,11 +2,11 @@ class EventsController < ApplicationController
 	before_action :require_login
 
 	def index
+		@events = current_user.events
 	end
 
 	def show
-		byebug
-		@current_user = current_user.id
+		@user = current_user
 		@event = Event.find(params[:id])
 		@tasks = @event.tasks
 	end
@@ -37,6 +37,7 @@ class EventsController < ApplicationController
 	end
 
 	def update
+
 		@event = Event.find(params[:id])
 		if @event.update(event_params)
 			redirect_to @event

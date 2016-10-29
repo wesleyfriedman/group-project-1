@@ -1,9 +1,18 @@
-<h4>Event: <%= @event.name %></h4>
+<nav class="navbar navbar-light" style="background-color: transparent;">
+  <form class="form-inline float-xs-right">
+    <a class="btn btn-secondary" href="<%= user_path(@user) %>" role="button" >Home</a>
+    <a class="btn btn-secondary" href="<%= new_event_task_path(@event.id) %>" role="button">Create Task</a>
+    <a class="btn btn-secondary" href="<%= logout_path %>" role="button" >Log Out</a>
+  </form>
+</nav>
+
+<div class="container" style="padding-top:10px;">
+<div class="row">
+ <div class="col-xs">
+	 <h4>Event: <%= @event.name %></h4>
 Starts at: <%= @event.date_format(@event.start_date)%><br>
 Ends at: <%= @event.date_format(@event.end_date)%><br>
 Address: <%= @event.address %>
-
-<%= button_to "Create Task", new_event_task_path(@event.id), :method => 'get'  %>
 
 <h4> Attendees: </h4>
 <ul><% @event.users.each do |user| %>
@@ -11,10 +20,21 @@ Address: <%= @event.address %>
 <% end %></ul>
 
 <% if @tasks%>
+<h4>Tasks</h4>
 	<% @tasks.each do |task| %>
-<div>
 	<%= task.find_user %> -
 	<%= task.description %><br>
 	<% end %>
-</div>
 <% end %>
+</div>
+		<div class="col-xs">
+		 	<iframe
+				width="600"
+				height="450"
+				frameborder="0"
+				src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA--uheO2WQTcl384FK72cshjJYn7cwRHE
+			  &q=<%=@event.address%>" allowfullscreen>
+			</iframe>
+		</div>
+</div>
+</div>

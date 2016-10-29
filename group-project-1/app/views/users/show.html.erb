@@ -1,3 +1,11 @@
+<nav class="navbar navbar-light" style="background-color: transparent;">
+  <form class="form-inline float-xs-right">
+    <a class="btn btn-secondary" href="<%= events_path %>" role="button">Events</a>
+    <a class="btn btn-secondary" href="<%= event_tasks_path %>" role="button">Tasks</a>
+    <a class="btn btn-secondary" href="<%= logout_path %>" role="button" >Log Out</a>
+  </form>
+</nav>
+
 <%= @user.name %><br>
 <%= @user.email %><br>
 <%= @user.phone_number %><br>
