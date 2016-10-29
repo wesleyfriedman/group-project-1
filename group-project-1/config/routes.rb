@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   post '/logout' => 'sessions#destroy'
+  post 'users/accept_invitation' => 'users#accept_invitation'
   # get '/events/:id/tasks/new' => 'tasks#new'
   # post '/events/:id/tasks' => 'tasks#create'
 

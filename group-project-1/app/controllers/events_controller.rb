@@ -5,9 +5,14 @@ class EventsController < ApplicationController
 	end
 
 	def show
-		byebug
-		@current_user = current_user.id
 		@event = Event.find(params[:id])
+		accepted_invitees_ids = EventsUser.where(event_id: @event.id, accepted: true).pluck(:user_id)
+		declined_invitees_ids = EventsUser.where(event_id: @event.id, accepted: false).pluck(:user_id)
+		pending_invitees_ids = EventsUser.where(event_id: @event.id, accepted: nil).pluck(:user_id)
+		@accepted_invitees = User.where(id: accepted_invitees_ids)
+		@declined_invitees = User.where(id: declined_invitees_ids)
+		@pending_invitees = User.where(id: pending_invitees_ids)
+		@current_user = current_user.id
 		@tasks = @event.tasks
 	end
 

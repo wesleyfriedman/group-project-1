@@ -1,11 +1,22 @@
-<%= @user.name %><br>
-<%= @user.email %><br>
-<%= @user.phone_number %><br>
+<p><%= @user.name %></p>
+<p><%= @user.email %></p>
+<p><%= @user.phone_number %></p>
 
-<ul><% @user.events.each do |event| %>
-	<li><%= link_to event.name, event_path(event) %></li>
+<h5> Attending: </h5>
+<ul><% @accepted_events.each do |event| %>
+	<%= event.name %>
 <% end %></ul>
 
+<h5> Invited: </h5>
+<ul><% @pending_events.each do |event| %>
+	<%= form_tag "accept_invitation" do |f| %>
+		<% hidden_field_tag 'event_id', event.id%>
+		<%= submit_tag 'accept invite' %>
+	<% end %>
+	<%= link_to event.name, event_path(event) %>
+<% end %></ul>
+
+<h5> Tasks: </h5>
 <ul><% @user.tasks.each do |task| %>
 	<h5><% task.find_event(task.event_id) %></h5>
 	<li><%= task.name %></li>

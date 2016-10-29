@@ -1,8 +1,9 @@
 class Event < ApplicationRecord
 
-	has_and_belongs_to_many :users
+	has_many :users, through: :events_users
 	has_many :tasks
 	has_many :supplies, through: :tasks
+	has_many :events_users
 
 	validates :name, presence: true
 	validates :address, presence: true
