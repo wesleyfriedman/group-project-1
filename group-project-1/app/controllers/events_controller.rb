@@ -54,8 +54,17 @@ class EventsController < ApplicationController
 
 	def invite
 		@user = User.find_by(email: params[:email])
-		@event = Event.find(params[:id])
-		@user.events << @event
+		unless @user
+			fz=FuzzyMatch.new(User.all, :read => :email)
+			@user = fz.find(params[:email])
+		end
+		if @user
+			@event = Event.find(params[:id])
+			@user.events << @event
+			flash[:notice] = "Successfully added #{@user.email}"
+		else
+			flash[:notice] = "Sorry, we couldn't find that user"
+		end
 		redirect_back(fallback_location: root_path)
 	end
 

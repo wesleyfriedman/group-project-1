@@ -13,17 +13,17 @@ class Event < ApplicationRecord
 	end
 
 	def accepted_invitees
-		accepted_invitees_ids = EventsUser.where(event_id: @event.id, accepted: true).pluck(:user_id)
+		accepted_invitees_ids = EventsUser.where(event_id: self.id, accepted: true).pluck(:user_id)
 		User.where(id: accepted_invitees_ids)
 	end
 
 	def declined_invitees
-		declined_invitees_ids = EventsUser.where(event_id: @event.id, accepted: false).pluck(:user_id)
+		declined_invitees_ids = EventsUser.where(event_id: self.id, accepted: false).pluck(:user_id)
 		User.where(id: declined_invitees_ids)
 	end
 
 	def pending_invitees
-		pending_invitees_ids = EventsUser.where(event_id: @event.id, accepted: nil).pluck(:user_id)
+		pending_invitees_ids = EventsUser.where(event_id: self.id, accepted: nil).pluck(:user_id)
 		User.where(id: pending_invitees_ids)
 	end
 
