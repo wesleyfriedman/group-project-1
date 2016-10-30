@@ -5,13 +5,16 @@ Rails.application.routes.draw do
   resources :event_users
   resources :events do
     resources :tasks
+    member do
+      post 'invite'
+    end
   end
   resources :users
   # resources :sessions, except: [:new, :create]
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   post '/logout' => 'sessions#destroy'
-  post 'users/accept_invitation' => 'users#accept_invitation'
+  post 'users/respond_to_invitation' => 'users#respond_to_invitation'
   # get '/events/:id/tasks/new' => 'tasks#new'
   # post '/events/:id/tasks' => 'tasks#create'
 

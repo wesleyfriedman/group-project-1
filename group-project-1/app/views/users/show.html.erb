@@ -1,20 +1,41 @@
-<p><%= @user.name %></p>
-<p><%= @user.email %></p>
-<p><%= @user.phone_number %></p>
+Name: <p><%= @user.name %></p>
+Email: <p><%= @user.email %></p>
+Phone Number: <p><%= @user.phone_number %></p>
 
 <h5> Attending: </h5>
 <ul><% @accepted_events.each do |event| %>
-	<%= event.name %>
+	<%= link_to event.name, event_path(event) %>
 <% end %></ul>
 
 <h5> Invited: </h5>
-<ul><% @pending_events.each do |event| %>
-	<%= form_tag "accept_invitation" do |f| %>
-		<% hidden_field_tag 'event_id', event.id%>
-		<%= submit_tag 'accept invite' %>
+<ul>
+	<% @pending_events.each do |event| %>
+		<span>
+			<%= link_to event.name, event_path(event) %>
+		</span>
+
+		<span>
+			<%= form_tag "respond_to_invitation" do |f| %>
+				<%= hidden_field_tag 'user_id', @user.id %>
+				<%= hidden_field_tag 'event_id', event.id %>
+				<%= hidden_field_tag 'accept', true %>
+				<%= submit_tag 'accept invite' %>
+			<% end %>
+		</span>
+
+		<span>
+			<%= form_tag "respond_to_invitation" do |f| %>
+				<%= hidden_field_tag 'user_id', @user.id %>
+				<%= hidden_field_tag 'event_id', event.id %>
+				<%= hidden_field_tag 'accept', false %>
+				<%= submit_tag 'decline invite' %>
+			<% end %>
+		</span>
 	<% end %>
-	<%= link_to event.name, event_path(event) %>
-<% end %></ul>
+</ul>
+
+
+
 
 <h5> Tasks: </h5>
 <ul><% @user.tasks.each do |task| %>

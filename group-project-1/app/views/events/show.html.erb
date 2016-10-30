@@ -1,31 +1,40 @@
 <h4>Event: <%= @event.name %></h4>
-Starts at: <%= @event.date_format(@event.start_date)%><br>
-Ends at: <%= @event.date_format(@event.end_date)%><br>
-Address: <%= @event.address %>
+<% if EventsUser.find_by(event_id: @event.id, user_id: @user.id) %>
+	Starts at: <%= @event.date_format(@event.start_date)%><br>
+	Ends at: <%= @event.date_format(@event.end_date)%><br>
+	Address: <%= @event.address %>
 
-<%= button_to "Create Task", new_event_task_path(@event.id), :method => 'get'  %>
-
-<h5> Attending: </h5>
-<ul><% @accepted_invitees.each do |user| %>
-	<%= user.name %>
-<% end %></ul>
-
-<h5> Not Attending: </h5>
-<ul><% @declined_invitees.each do |user| %>
-	<%= user.name %>
-<% end %></ul>
-
-<h5> Invited: </h5>
-<ul><% @pending_invitees.each do |user| %>
-	<%= user.name %>
-<% end %></ul>
-
-<h5> Tasks: </h5>
-<% if @tasks%>
-	<% @tasks.each do |task| %>
-<div>
-	<%= task.find_user %> -
-	<%= task.description %><br>
+	<h5> Invite Guests: </h5>
+	<%= form_tag(invite_event_path(@event)) do |f| %>
+		<%= text_field_tag 'email' %>
+		<%= hidden_field_tag 'event_id', @event.id %>
+		<%= submit_tag 'invite' %>
 	<% end %>
-</div>
+
+	<%= button_to "Create Task", new_event_task_path(@event.id), :method => 'get'  %>
+
+	<h5> Attending: </h5>
+	<ul><% @accepted_invitees.each do |user| %>
+		<%= user.name %>
+	<% end %></ul>
+
+	<h5> Not Attending: </h5>
+	<ul><% @declined_invitees.each do |user| %>
+		<%= user.name %>
+	<% end %></ul>
+
+	<h5> Invited: </h5>
+	<ul><% @pending_invitees.each do |user| %>
+		<li><%= user.name %></li>
+	<% end %></ul>
+
+	<h5> Tasks: </h5>
+	<% if @tasks%>
+		<% @tasks.each do |task| %>
+	<div>
+		<%= task.find_user %> -
+		<%= task.description %><br>
+		<% end %>
+	</div>
+	<% end %>
 <% end %>

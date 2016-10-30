@@ -6,13 +6,10 @@ class EventsController < ApplicationController
 
 	def show
 		@event = Event.find(params[:id])
-		accepted_invitees_ids = EventsUser.where(event_id: @event.id, accepted: true).pluck(:user_id)
-		declined_invitees_ids = EventsUser.where(event_id: @event.id, accepted: false).pluck(:user_id)
-		pending_invitees_ids = EventsUser.where(event_id: @event.id, accepted: nil).pluck(:user_id)
-		@accepted_invitees = User.where(id: accepted_invitees_ids)
-		@declined_invitees = User.where(id: declined_invitees_ids)
-		@pending_invitees = User.where(id: pending_invitees_ids)
-		@current_user = current_user.id
+		@user = current_user
+		@accepted_invitees = @event.accepted_invitees
+		@declined_invitees = @event.declined_invitees
+		@pending_invitees = @event.pending_invitees
 		@tasks = @event.tasks
 	end
 
@@ -53,6 +50,13 @@ class EventsController < ApplicationController
 	def destroy
 		Event.find(params[:id]).destroy
 		redirect_to user_path(session[:user_id])
+	end
+
+	def invite
+		@user = User.find_by(email: params[:email])
+		@event = Event.find(params[:id])
+		@user.events << @event
+		redirect_back(fallback_location: root_path)
 	end
 
 	private

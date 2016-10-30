@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 		accepted_events_ids = EventsUser.where(user_id: @user.id, accepted: true).pluck(:event_id)
 		pending_events_ids = EventsUser.where(user_id: @user.id, accepted: nil).pluck(:event_id)
 		@accepted_events = Event.where(id: accepted_events_ids)
-		@pending_events = Event.where(id: pending_events_ids)
+		@pending_events = Event.where("events.host != ? and id in (?)", @user.id, pending_events_ids)
 		if current_user.id == @user.id
 		else
 			redirect_to user_path(current_user)
@@ -53,11 +53,16 @@ class UsersController < ApplicationController
 		redirect_to root_path
 	end
 
-	def accept_invitation
-		# byebug
-		@user = current_user
-		@events_user = EventsUser.where(event_id: params[:id], user_id: @user.id)
-		@events_user.accepted = true
+	def respond_to_invitation
+		@events_user = EventsUser.find_by(event_id: params[:event_id], user_id: params[:user_id])
+		byebug
+		if params[:accept] == "true"
+			@events_user.accepted = true
+		else
+			@events_user.accepted = false
+		end
+		@events_user.save
+		redirect_back(fallback_location: root_path)
 	end
 
 	private
