@@ -1,29 +1,67 @@
-<h1>Update Event</h1>
-<% if @event.errors.any? %>
- <div id="error_explanation">
-   <h4>
-     <%= pluralize(@event.errors.count, "error") %>
-     prohibited this event from being saved:
-   </h4>
-   <ul>
-   <% @event.errors.full_messages.each do |msg| %>
-     <li><%= msg %></li>
-   <% end %>
-   </ul>
- </div>
-<% end %>
-<%= form_for @event do |f| %>
-Name: <%= f.text_field :name %><br>
-Starts at: <%= f.datetime_local_field :start_date, min: Time.zone.today%><br>
-Ends at: <%= f.datetime_local_field :end_date, min: Time.zone.today%><br>
-Address: <%= f.text_field :address %><br>
-Description: <%= f.text_area :description %><br>
-<%= f.submit "Update Event" %>
-<% end %>
-<%= button_to "Delete", @event, method: :delete, data: { confirm: "No RSVPs?" }  %>
+<!-- nav bar  -->
+<nav class="navbar navbar-light" style="background-color: transparent; font-family: Quicksand;">
+  <form class="form-inline float-xs-left">
+    <a class="btn btn-outline-info" href="<%= root_path %>" role="button" >ODDTER</a>
+  </form>
+  <form class="form-inline float-xs-right">
+    <a class="btn btn-secondary" href="<%= new_event_path %>" role="button">Create an Event</a>
+    <a class="btn btn-secondary" href="<%= new_event_task_path(@event.id) %>" role="button">Create Task</a>
+    <a class="btn btn-secondary" href="<%= logout_path %>" role="button" >Log Out</a>
+  </form>
+</nav>
+<!-- nav bar -->
+<div style="font-family: Quicksand;">
 
-<h1> Send an invitation </h1>
-<%= form_tag event_path(@event) do%>
-<%= text_field_tag 'events[email]'%>
-<%= submit_tag "Send Invite" %>
-<% end %>
+<div class="container" style="padding-top:50px; font-family: Quicksand;">
+  <h1>Update Event</h1><br>
+
+  <!-- errors  -->
+  <% if @event.errors.any? %>
+     <h4><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h4>
+     <ul><% @event.errors.full_messages.each do |msg| %>
+       <li><%= msg %></li>
+     <% end %></ul>
+  <% end %>
+  <!-- errors -->
+
+  <div class="form-group row">
+    <%= form_for @event do |f| %>
+    <label class="col-xs-2 col-form-label">Name:</label>
+    <div class="col-xs-10">
+      <%= f.text_field :name %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-xs-2 col-form-label">Starts at:</label>
+    <div class="col-xs-10">
+      <%= f.datetime_local_field :start_date, min: Time.zone.today%></div>
+  </div>
+  <div class="form-group row">
+    <label class="col-xs-2 col-form-label">Ends at:</label>
+    <div class="col-xs-10">
+      <%= f.datetime_local_field :end_date, min: Time.zone.today %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-xs-2 col-form-label">Address:</label>
+    <div class="col-xs-10">
+      <%= f.text_field :address %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-xs-2 col-form-label"> Description:</label>
+    <div class="col-xs-10">
+      <%= f.text_area :description %>
+  </div><br><br><br>
+  <div class="col-xs-10">
+    <button class="btn btn-secondary" type=<%= f.submit %> Update Event </button>
+    <a class="btn btn-secondary" href="<%= event_path(@event) %>" role="button" >Cancel</a>
+    <% end %><br><br>
+    <%= button_to "Delete", @event, method: :delete, data: { confirm: "No RSVPs?" }  %>
+
+    <h1>Send an invitation </h1>
+    <%= form_tag event_path(@event) do%>
+      <%= text_field_tag 'events[email]'%>
+      <%= submit_tag "Send Invite" %>
+    <% end %>
+</div>

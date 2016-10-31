@@ -12,6 +12,7 @@ class Event < ApplicationRecord
 		date.strftime("%A - %B %y, %Y at %I:%M %p")
 	end
 
+
 	def accepted_invitees
 		accepted_invitees_ids = EventsUser.where(event_id: self.id, accepted: true).pluck(:user_id)
 		User.where(id: accepted_invitees_ids)

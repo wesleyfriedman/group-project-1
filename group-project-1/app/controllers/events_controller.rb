@@ -1,7 +1,10 @@
 class EventsController < ApplicationController
 	before_action :require_login
 
+	require 'twitter'
+
 	def index
+		@events = current_user.events
 	end
 
 	def show
@@ -11,10 +14,23 @@ class EventsController < ApplicationController
 		@declined_invitees = @event.declined_invitees
 		@pending_invitees = @event.pending_invitees
 		@tasks = @event.tasks
+		@host = User.find(@event.host)
+		# Twitter.favorites("railscast",count: 1)
+	end
+
+	def yelp
+		redirect_to "https://www.yelp.com/search?find_desc=&find_loc=#{params[:city]}&ns=1"
+	end
+
+	def twitter
+		@twitter = Twitter.search("to:justinbieber marry me", result_type: "recent").take(3).collect do |tweet|
+  		"#{tweet.user.screen_name}: #{tweet.text}"
+		end
 	end
 
 	def new
 		@event = Event.new
+		@user = current_user
 	end
 
 	def create

@@ -1,3 +1,27 @@
+<nav class="navbar navbar-light" style="background-color: transparent; font-family: Quicksand;">
+  <form class="form-inline float-xs-left">
+  <a class="btn btn-outline-info" href="<%= root_path %>" role="button" >ODDTER</a>         &nbsp;
+
+  </form>
+  <form class="form-inline float-xs-right">
+    <a class="btn btn-secondary" href="<%= user_path(@user) %>" role="button" >Home</a>
+    <a class="btn btn-secondary" href="<%= new_event_path %>" role="button">Create an Event</a>
+      <% if @host.id == @user.id %>
+    <a class="btn btn-secondary" href="<%= edit_event_path %>" role="button" >Update Event</a>
+      <% end %>
+    <a class="btn btn-secondary" href="<%= new_event_task_path(@event.id) %>" role="button">Create Task</a>
+    <a class="btn btn-secondary" href="<%= logout_path %>" role="button" >Log Out</a>
+  </form>
+  <form action='/yelp' method='get'class="form-inline float-xs-left">
+    <input class="form-control" type="text" name ="city" placeholder="City, Zip Code">
+    <button class="btn btn-outline-danger" type="submit">Yelp it!</button>
+        &nbsp;
+  </form>
+</nav>
+
+<div class="row" style="font-family: Quicksand;">
+  <div class="col-md-6" style="padding-top:50px;  padding-left:150px;">
+
 <h4>Event: <%= @event.name %></h4>
 
 <% if EventsUser.find_by(event_id: @event.id, user_id: @user.id) %>
@@ -34,13 +58,27 @@
 		<li><%= user.name %></li>
 	<% end %></ul>
 
-	<h5> Tasks: </h5>
-	<% if @tasks%>
-		<% @tasks.each do |task| %>
-	<div>
-		<%= task.find_user %> -
-		<%= task.description %><br>
-		<% end %>
-	</div>
-	<% end %>
-<% end %>
+  <% if @tasks%>
+  <h4><strong>Tasks</strong></h4>
+  	<% @tasks.each do |task| %>
+      <% if task.complete != true %>
+  	    <%= task.find_user %>:
+  	    <%= task.description %><br>
+        <%= button_to "Complete", complete_path, params: {id: task.id} %>
+      <% else %>
+        <del><%= task.find_user %>:
+        <%= task.description %></del><br>
+      <% end %>
+    <% end %>
+  <% end %>
+  </div>
+  <div class="col-md-6"  style="padding-top:40px;">
+   	<iframe
+  		width="600"
+  		height="450"
+  		frameborder="0"
+  		src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA--uheO2WQTcl384FK72cshjJYn7cwRHE
+  	  &q=<%=@event.address%>" allowfullscreen>
+  	</iframe>
+  </div>
+</div>
