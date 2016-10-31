@@ -24,6 +24,7 @@
 <h4>Event: <%= @event.name %></h4>
 
 <% if EventsUser.find_by(event_id: @event.id, user_id: @user.id) %>
+  Hosted by: <%= @host.name %><br>
 	Starts at: <%= @event.date_format(@event.start_date)%><br>
 	Ends at: <%= @event.date_format(@event.end_date)%><br>
 	Address: <%= @event.address %>
@@ -43,17 +44,17 @@
 	<% end %>
 
 	<h5> Attending: </h5>
-	<% @accepted_invitees.each do |user| %>
+	<% @accepted.each do |user| %>
 		<ol type="1"><%= user.name %></ol>
 	<% end %>
 
 	<h5> Not Attending: </h5>
-	<ul><% @declined_invitees.each do |user| %>
+	<ul><% @declined.each do |user| %>
 		<%= user.name %>
 	<% end %></ul>
 
 	<h5> Invited: </h5>
-	<ul><% @pending_invitees.each do |user| %>
+	<ul><% @pending.each do |user| %>
 		<li><%= user.name %></li>
 	<% end %></ul>
 

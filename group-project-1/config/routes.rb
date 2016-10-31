@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get '/yelp' => 'events#yelp'
   post '/complete' => 'tasks#complete'
   get '/complete' => 'tasks#complete'
+  get '/events/:id/invite' => 'events#invite'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

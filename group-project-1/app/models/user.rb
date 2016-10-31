@@ -21,4 +21,8 @@ class User < ApplicationRecord
 		self.events.select {|event| event.host == self.id }
 	end
 
+	def find_host(event)
+		User.find(event.host)
+	end
+
 end

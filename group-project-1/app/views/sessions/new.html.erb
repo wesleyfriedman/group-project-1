@@ -4,4 +4,8 @@
 	Password: <%= password_field_tag 'user[password]' %> &nbsp;
 	<%= submit_tag 'submit' %>
 <% end %>
+
+	<% if flash[:notice] %>
+		<div class="error"><%= flash[:notice] %></div>
+	<% end %>
 </div>

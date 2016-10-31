@@ -8,18 +8,16 @@ class EventsController < ApplicationController
 		@hosted_events = current_user.hosted_events
 	end
 
-@accepted = Invitation.new(@user, @event)
-@accepted.accepted_invitees
-
-
 	def show
 		@event = Event.find(params[:id])
 		@user = current_user
-		@accepted_invitees = @event.accepted_invitees
-		@declined_invitees = @event.declined_invitees
-		@pending_invitees = @event.pending_invitees
+		invitation = Invitation.new(@user, @event)
+		@accepted = invitation.accepted_invitees
+		@declined = invitation.declined_invitees
+		@pending = invitation.pending_invitees
 		@tasks = @event.tasks
-		@host = User.find(@event.host)
+		@host = @user.find_host(@event)
+		# @host = User.find(@event.host)
 		# Twitter.favorites("railscast",count: 1)
 	end
 
@@ -80,9 +78,12 @@ class EventsController < ApplicationController
 			@user = fz.find(params[:email])
 		end
 		if @user
+			# byebug
 			@event = Event.find(params[:id])
 			@user.events << @event
-			flash[:notice] = "Successfully added #{@user.email}"
+			@host = @user.find_host(@event)
+			UserMailer.invitation_email(@user, @event, @host).deliver_now
+			flash[:notice] = "Successfully invited #{@user.email}"
 		else
 			flash[:notice] = "Sorry, we couldn't find that user"
 		end
