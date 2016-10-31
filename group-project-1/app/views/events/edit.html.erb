@@ -59,9 +59,4 @@
     <% end %><br><br>
     <%= button_to "Delete", @event, method: :delete, data: { confirm: "No RSVPs?" }  %>
 
-    <h1>Send an invitation </h1>
-    <%= form_tag event_path(@event) do%>
-      <%= text_field_tag 'events[email]'%>
-      <%= submit_tag "Send Invite" %>
-    <% end %>
 </div>

@@ -5,7 +5,12 @@ class EventsController < ApplicationController
 
 	def index
 		@events = current_user.events
+		@hosted_events = current_user.hosted_events
 	end
+
+@accepted = Invitation.new(@user, @event)
+@accepted.accepted_invitees
+
 
 	def show
 		@event = Event.find(params[:id])
