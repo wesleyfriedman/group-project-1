@@ -55,7 +55,7 @@ class UsersController < ApplicationController
 
 	def respond_to_invitation
 		@events_user = EventsUser.find_by(event_id: params[:event_id], user_id: params[:user_id])
-		byebug
+		# byebug
 		if params[:accept] == "true"
 			@events_user.accepted = true
 		else
