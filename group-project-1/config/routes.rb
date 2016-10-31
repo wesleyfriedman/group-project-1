@@ -11,6 +11,12 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   post '/logout' => 'sessions#destroy'
+  get '/logout' => 'sessions#destroy'
+  # post '/yelp' => 'events#yelp'
+  get '/yelp' => 'events#yelp'
+  post '/complete' => 'tasks#complete'
+  get '/complete' => 'tasks#complete'
+
   # get '/events/:id/tasks/new' => 'tasks#new'
   # post '/events/:id/tasks' => 'tasks#create'
 

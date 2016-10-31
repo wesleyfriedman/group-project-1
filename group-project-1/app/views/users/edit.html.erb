@@ -1,23 +1,60 @@
-<h1>Update User</h1>
-<% if @user.errors.any? %>
- <div id="error_explanation">
-   <h4>
-     <%= pluralize(@user.errors.count, "error") %>
-     prohibited this user from being saved:
-   </h4>
-   <ul>
-   <% @user.errors.full_messages.each do |msg| %>
-     <li><%= msg %></li>
-   <% end %>
-   </ul>
- </div>
-<% end %>
-<%= form_for @user do |f| %>
-Name: <%= f.text_field :name %><br>
-Email: <%= f.email_field :email %><br>
-Phone Number: <%= f.telephone_field :phone_number %><br>
-Password: <%= f.password_field :password %><br>
-Password Confirmation: <%= f.password_field :password_confirmation %><br>
-<%= f.submit "Update User" %>
-<% end %>
-<%= button_to "Delete", @user, method: :delete, data: { confirm: "Bye Felicia" }  %>
+<!-- nav bar -->
+<nav class="navbar navbar-light" style="background-color: transparent; font-family: Quicksand;">
+  <form class="form-inline float-xs-left">
+  <a class="btn btn-outline-info" href="<%= root_path %>" role="button" >ODDTER</a>
+  </form>
+  <form class="form-inline float-xs-right">
+    <a class="btn btn-secondary" href="<%= user_path(@user) %>" role="button" >Home</a>
+    <a class="btn btn-secondary" href="<%= new_event_path %>" role="button">Create an Event</a>
+    <a class="btn btn-secondary" href="<%= logout_path %>" role="button" >Log Out</a>
+  </form>
+</nav>
+<!-- nav bar -->
+<div class="container" style="padding-top:10px; font-family: Quicksand;">
+  <h1>Update User</h1>
+<!-- erros -->
+  <% if @user.errors.any? %>
+   <div id="error_explanation">
+    <h4><%= pluralize(@user.errors.count, "error") %>prohibited this user from being saved:</h4>
+    <ul><% @user.errors.full_messages.each do |msg| %>
+       <li><%= msg %></li>
+     <% end %></ul>
+   </div>
+  <% end %><br>
+<!-- errors -->
+  <div class="form-group row">
+    <%= form_for @user do |f| %>
+    <label class="col-xs-2 col-form-label">Name:</label>
+    <div class="col-xs-10">
+      <%= f.text_field :name %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-xs-2 col-form-label">Email :</label>
+    <div class="col-xs-10">
+      <%= f.email_field :email%></div>
+  </div>
+  <div class="form-group row">
+    <label class="col-xs-2 col-form-label">Phone Number:</label>
+    <div class="col-xs-10">
+      <%= f.telephone_field :phone_number%>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-xs-2 col-form-label">Password:</label>
+    <div class="col-xs-10">
+      <%= f.password_field :password %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-xs-2 col-form-label">  Confirmation:</label>
+    <div class="col-xs-10">
+      <%= f.password_field :password_confirmation %>
+    </div><br><br>
+  <div class="col-xs-10">
+    <button class="btn btn-secondary" type=<%= f.submit %> Update </button>
+    <a class="btn btn-secondary" href="<%= user_path(@user) %>" role="button" >Cancel</a>
+  </div>
+    <% end %>
+  <%= button_to "Delete", @user, method: :delete, data: { confirm: "Bye Felicia" }  %>
+</div>

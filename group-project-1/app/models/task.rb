@@ -3,6 +3,7 @@ class Task < ApplicationRecord
 	belongs_to :event
 	has_many :supplies
 	validates :name, presence: true
+	validates :description, presence: true
 
 	def find_event(event_id)
 		event = Event.find(event_id)
@@ -10,7 +11,7 @@ class Task < ApplicationRecord
 	end
 
 	def find_user
-		User.find(self.user_id).name 
+		User.find(self.user_id).name
 	end
 
 end

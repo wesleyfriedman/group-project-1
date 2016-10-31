@@ -8,6 +8,13 @@ class TasksController < ApplicationController
 		@task = Task.find(params[:id])
 	end
 
+	def complete
+		@task = Task.find(params[:id])
+		@task.complete = true
+		@task.save
+		redirect_to event_path(@task.event)
+	end
+
 	def new
 		@user = current_user
 		@task = Task.new
@@ -21,7 +28,7 @@ class TasksController < ApplicationController
 		user = User.find(params[:user_id])
 		@task.event_id = params[:event_id]
 		@task.user_id = user.id
-			if @task.save
+		if @task.save
 			redirect_to event_path(params[:event_id])
 		else
 			render :new

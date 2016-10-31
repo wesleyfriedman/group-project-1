@@ -11,4 +11,12 @@ class Event < ApplicationRecord
 		date.strftime("%A - %B %y, %Y at %I:%M %p")
 	end
 
+	def self.start_date_data
+		<<-SQL
+		SELECT start_date
+		FROM events
+		GROUP BY start_date;
+		SQL
+	end
+
 end

@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'google-api-client'
+gem 'twitter'
+gem 'faker'
+gem  'chartkick'
+gem 'groupdate'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 gem 'bootstrap', '~> 4.0.0.alpha3'

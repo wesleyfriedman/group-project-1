@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :null_session
   before_action :require_login
   helper_method :logged_in?
 
@@ -16,4 +16,6 @@ class ApplicationController < ActionController::Base
   def require_login
   	redirect_to login_path unless logged_in?
   end
+
+
 end

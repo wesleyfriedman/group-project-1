@@ -1,6 +1,18 @@
-<%= @events.each do |event| %>
-<h4>Event: <%= event.name %></h4>
-Starts at: <%= event.date_format(event.start_date)%><br>
-Ends at: <%= event.date_format(event.end_date)%><br>
-Address: <%= event.address %>
-<% end %>
+<div class="container" style="font-family: Quicksand;">
+  <div class="row">
+    <div class="col-md-6" style="padding-top:70px;">
+      <%= line_chart Event.group_by_day(:start_date).count, width: "500px", height: "300px", colors: ["#404040"]%><br><br>
+      <%= column_chart Event.group_by_day_of_week(:start_date, format: "%a").count , width: "500px", height: "300px", colors: ["#404040"]%><br><br>
+      <%= pie_chart Event.group_by_hour_of_day(:start_date, format: "%-l %P").count , width: "500px", height: "300px"%><br><br>
+    </div>
+    <div class="col-md-6" style="padding-top:20px;  padding-left:0px;">
+      <h1>Most popular</h1>
+          <br><br><br><br><br><br><br><br><br><br>
+      <h3>Time of year</h3>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <h3>Day</h3>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <h3>Hour</h3>
+    </div>
+  </div>
+</div>

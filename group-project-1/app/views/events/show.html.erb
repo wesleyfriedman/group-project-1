@@ -1,40 +1,62 @@
-<nav class="navbar navbar-light" style="background-color: transparent;">
+<!-- nav bar -->
+<nav class="navbar navbar-light" style="background-color: transparent; font-family: Quicksand;">
+  <form class="form-inline float-xs-left">
+  <a class="btn btn-outline-info" href="<%= root_path %>" role="button" >ODDTER</a>         &nbsp;
+
+  </form>
   <form class="form-inline float-xs-right">
     <a class="btn btn-secondary" href="<%= user_path(@user) %>" role="button" >Home</a>
+    <a class="btn btn-secondary" href="<%= new_event_path %>" role="button">Create an Event</a>
+      <% if @host.id == @user.id %>
+    <a class="btn btn-secondary" href="<%= edit_event_path %>" role="button" >Update Event</a>
+      <% end %>
     <a class="btn btn-secondary" href="<%= new_event_task_path(@event.id) %>" role="button">Create Task</a>
     <a class="btn btn-secondary" href="<%= logout_path %>" role="button" >Log Out</a>
   </form>
+  <form action='/yelp' method='get'class="form-inline float-xs-left">
+    <input class="form-control" type="text" name ="city" placeholder="City, Zip Code">
+    <button class="btn btn-outline-danger" type="submit">Yelp it!</button>
+        &nbsp;
+  </form>
 </nav>
+<!-- nav bar -->
 
-<div class="container" style="padding-top:10px;">
-<div class="row">
- <div class="col-xs">
-	 <h4>Event: <%= @event.name %></h4>
-Starts at: <%= @event.date_format(@event.start_date)%><br>
-Ends at: <%= @event.date_format(@event.end_date)%><br>
-Address: <%= @event.address %>
+<div class="row" style="font-family: Quicksand;">
+  <div class="col-md-6" style="padding-top:50px;  padding-left:150px;">
 
-<h4> Attendees: </h4>
-<ul><% @event.users.each do |user| %>
-	<%= user.name %>
-<% end %></ul>
+	<h4><strong>Event:</strong> <%= @event.name %></h4>
+    <strong>Hosted by </strong> <br>&nbsp;&nbsp;&nbsp;<%= @host.name %><br>
+    <strong>Starts at:</strong> &nbsp;<%= @event.date_format(@event.start_date)%><br>
+    <strong>Ends at:</strong> &nbsp;<%= @event.date_format(@event.end_date)%><br>
+    <strong>Address:</strong> &nbsp;<%= @event.address %><br>
+    <strong>Details</strong> <br><p><%= @event.description %></p><br><br>
 
-<% if @tasks%>
-<h4>Tasks</h4>
-	<% @tasks.each do |task| %>
-	<%= task.find_user %> -
-	<%= task.description %><br>
-	<% end %>
-<% end %>
-</div>
-		<div class="col-xs">
-		 	<iframe
-				width="600"
-				height="450"
-				frameborder="0"
-				src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA--uheO2WQTcl384FK72cshjJYn7cwRHE
-			  &q=<%=@event.address%>" allowfullscreen>
-			</iframe>
-		</div>
-</div>
+  <h4><strong>Attendees:</strong></h4>
+    <% @event.users.each do |user| %>
+      <%= user.name %><br>
+    <% end %><br>
+
+  <% if @tasks%>
+  <h4><strong>Tasks</strong></h4>
+  	<% @tasks.each do |task| %>
+      <% if task.complete != true %>
+  	    <%= task.find_user %>:
+  	    <%= task.description %><br>
+        <%= button_to "Complete", complete_path, params: {id: task.id} %>
+      <% else %>
+        <del><%= task.find_user %>:
+        <%= task.description %></del><br>
+      <% end %>
+    <% end %>
+  <% end %>
+  </div>
+  <div class="col-md-6"  style="padding-top:40px;">
+   	<iframe
+  		width="600"
+  		height="450"
+  		frameborder="0"
+  		src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA--uheO2WQTcl384FK72cshjJYn7cwRHE
+  	  &q=<%=@event.address%>" allowfullscreen>
+  	</iframe>
+  </div>
 </div>

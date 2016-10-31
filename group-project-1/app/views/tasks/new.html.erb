@@ -1,34 +1,46 @@
-<nav class="navbar navbar-light" style="background-color: transparent;">
+<!-- nav bar -->
+<nav class="navbar navbar-light" style="background-color: transparent; font-family: Quicksand;">
   <form class="form-inline float-xs-right">
     <a class="btn btn-secondary" href="<%= user_path(@user) %>" role="button">Home</a>
     <a class="btn btn-secondary" href="<%= event_path(@event) %>" role="button">Event</a>
     <a class="btn btn-secondary" href="<%= logout_path %>" role="button" >Log Out</a>
   </form>
 </nav>
+<!-- nav bar -->
 
-<h1>Create Task</h1>
-<% if @task.errors.any? %>
- <div id="error_explanation">
-   <h4>
-     <%= pluralize(@task.errors.count, "error") %>
-     prohibited this task from being saved:
-   </h4>
-   <ul>
-   <% @task.errors.full_messages.each do |msg| %>
-     <li><%= msg %></li>
-   <% end %>
-   </ul>
- </div>
-<% end %>
-
-<%= form_for [@event, @task] do |f|  %>
-Name: <%= f.text_field :name %><br>
-Description: <%= f.text_area :description %><br>
-Assign to: <select name="user_id">
-  <% @users.each do |user| %>
-  <option value="<%= user.id %>" >
-  <%= user.name %> </option>
+<div class="container" style="padding-top:10px; font-family: Quicksand;">
+  <h1 >Create Task</h1><br>
+  <!-- errors -->
+  <% if @task.errors.any? %>
+   <div id="error_explanation">
+     <h4><%= pluralize(@task.errors.count, "error")%>prohibited this task from being saved:</h4>
+     <ul><% @task.errors.full_messages.each do |msg| %>
+       <li><%= msg %></li>
+     <% end %></ul>
+   </div>
   <% end %>
-</select><br>
-<%= f.submit "Create" %>
-<% end %>
+  <!-- errors -->
+  <div class="form-group row">
+    <%= form_for [@event, @task] do |f| %>
+    <label for="example-text-input" class="col-xs-2 col-form-label">Name:</label>
+    <div class="col-xs-10">
+      <%= f.text_field :name %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="example-search-input" class="col-xs-2 col-form-label">Description:</label>
+    <div class="col-xs-10">
+      <%= f.text_area :description%>
+    </div>
+  </div>
+    <label>Assign to: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+  <select class ="btn-group" name="user_id">
+    <% @users.each do |user| %>
+      <option value="<%= user.id %>" >
+        <%= user.name %> </option>
+    <% end %>
+  </select><br><br>
+  <div class="col-xs-10">
+    <button class="btn btn-secondary" type="<%= f.submit %>"> Create Task </button> &nbsp;
+  </div>
+  <% end %>
