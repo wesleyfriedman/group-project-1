@@ -90,7 +90,7 @@ class EventsController < ApplicationController
 			UserMailer.invitation_email(@user, @event, true).deliver_now
 			flash[:notice] = "Successfully invited #{@user.email}"
 		end
-		redirect_back(fallback_location: root_path)
+		redirect_to :back
 	end
 
 	private

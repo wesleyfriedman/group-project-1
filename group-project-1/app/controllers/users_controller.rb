@@ -66,7 +66,7 @@ class UsersController < ApplicationController
 			@events_user.accepted = false
 		end
 		@events_user.save
-		redirect_back(fallback_location: root_path)
+		redirect_to :back
 	end
 
 	private
