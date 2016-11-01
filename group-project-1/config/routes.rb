@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   post '/complete' => 'tasks#complete'
   get '/complete' => 'tasks#complete'
   get '/dashboard' => 'application#dashboard'
+  get '/events/:id/invite' => 'events#invite'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

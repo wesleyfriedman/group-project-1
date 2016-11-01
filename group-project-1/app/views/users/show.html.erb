@@ -1,8 +1,47 @@
-Name: <p><%= @user.name %></p>
-Email: <p><%= @user.email %></p>
-Phone Number: <p><%= @user.phone_number %></p>
+<nav class="navbar navbar-light" style="background-color: transparent; font-family: Quicksand;">
+  <form class="form-inline float-xs-left">
+  <a class="btn btn-outline-info" href="<%= root_path %>" role="button" >ODDTER</a>
+  </form>
+  <form class="form-inline float-xs-right">
+    <a class="btn btn-secondary" href="<%= new_event_path %>" role="button">Create an Event</a>
+    <a class="btn btn-secondary" href="<%= edit_user_path(@user) %>" role="button">Update Account</a>
+		<a class="btn btn-secondary" href="<%= logout_path %>" role="button">Log Out</a>
+		&nbsp;
+  </form>
 
-<h5> Attending: </h5>
+</nav>
+
+<div style="font-family: Quicksand;">
+  <div class="col-xs-6" style="padding-top:50px;  padding-left:150px;">
+  <h4><strong>Hey Beautiful</strong></h4>
+Name: <%= @user.name %><br>
+Email: <%= @user.email %><br>
+Phone Number: <%= number_to_phone(@user.phone_number, area_code: true) %><br><br>
+
+	<h4><strong>Tasks</strong></h4>
+
+	<% @user.tasks.each do |task| %>
+	  <% if task.complete != true && task.event != nil%>
+	  <strong><%= task.find_event(task.event_id) %></strong>:
+	  <%= task.description %><br>
+	  <%= button_to "Complete", complete_path, params: {id: task.id} %>
+	  <% elsif task.event != nil%>
+	  <del><strong><%= task.find_event(task.event_id) %></strong>: <%= task.description %></del><br>
+	  <% end %>
+	<% end %>
+
+</div>
+
+<div class="col-xs-6" style="padding-top:50px;  padding-left:0px;">
+	<h4><strong>Events</strong></h4>
+	<% @user.events.each do |event| %>
+		<%= link_to event.name, event_path(event) %><br>
+		Address: <%= event.address %><br>
+		Starts at: <%= event.date_format(event.start_date) %><br>
+		Ends at: <%= event.date_format(event.end_date) %><br>
+	<% end %><br>
+
+	<h5> Attending: </h5>
 <ul><% @accepted_events.each do |event| %>
 	<%= link_to event.name, event_path(event) %>
 <% end %></ul>
@@ -33,45 +72,5 @@ Phone Number: <p><%= @user.phone_number %></p>
 		</span>
 	<% end %>
 </ul>
-
-<nav class="navbar navbar-light" style="background-color: transparent; font-family: Quicksand;">
-  <form class="form-inline float-xs-left">
-  <a class="btn btn-outline-info" href="<%= root_path %>" role="button" >ODDTER</a>
-  </form>
-  <form class="form-inline float-xs-right">
-    <a class="btn btn-secondary" href="<%= new_event_path %>" role="button">Create an Event</a>
-    <a class="btn btn-secondary" href="<%= edit_user_path(@user) %>" role="button">Update Account</a>
-		<a class="btn btn-secondary" href="<%= logout_path %>" role="button">Log Out</a>
-		&nbsp;
-  </form>
-
-</nav>
-<div style="font-family: Quicksand;">
-  <div class="col-xs-6" style="padding-top:50px;  padding-left:150px;">
-  <h4><strong>Hey Beautiful</strong></h4>
-<%= @user.name %><br>
-<%= @user.email %><br>
-<%= @user.phone_number %><br><br>
-</div>
-
-<div class="col-xs-6" style="padding-top:50px;  padding-left:0px;">
-	<h4><strong>Events</strong></h4>
-	<% @user.events.each do |event| %>
-		<%= link_to event.name, event_path(event) %><br>
-		Address: <%= event.address %><br>
-		Starts at: <%= event.date_format(event.start_date) %><br>
-		Ends at: <%= event.date_format(event.end_date) %><br>
-	<% end %><br>
-	<h4><strong>Tasks</strong></h4>
-
-	<% @user.tasks.each do |task| %>
-	  <% if task.complete != true && task.event != nil%>
-	  <strong><%= task.find_event(task.event_id) %></strong>:
-	  <%= task.description %><br>
-	  <%= button_to "Complete", complete_path, params: {id: task.id} %>
-	  <% elsif task.event != nil%>
-	  <del><strong><%= task.find_event(task.event_id) %></strong>: <%= task.description %></del><br>
-	  <% end %>
-	<% end %>
 </div>
 </div>

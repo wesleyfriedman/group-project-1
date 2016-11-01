@@ -23,7 +23,6 @@ class TasksController < ApplicationController
 	end
 
 	def create
-		# byebug
 		@task = Task.new(task_params)
 		user = User.find(params[:user_id])
 		@task.event_id = params[:event_id]
