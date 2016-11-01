@@ -5,7 +5,7 @@ Rails.application.configure do
     authentication: "plain",
     address: "smtp.gmail.com",
     port: 587,
-    domain: "https://oddter.herokuapp.com",
+    domain: "oddter.herokuapp.com",
     enable_starttls_auto: true,
     user_name: ENV['GMAIL_USERNAME_DEV'],
     password: ENV['GMAIL_PASSWORD_DEV']
