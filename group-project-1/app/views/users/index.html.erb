@@ -1,0 +1,29 @@
+<nav class="navbar navbar-light" style="background-color: transparent; font-family: Quicksand;">
+  <form class="form-inline float-xs-left">
+  <a class="btn btn-outline-info" href="<%= root_path %>" role="button">ODDTER</a>
+  </form>
+  <form class="form-inline float-xs-right">
+    <a class="btn btn-secondary" href="<%= user_path(@user) %>" role="button">Home</a>
+    <a class="btn btn-secondary" href="<%= new_event_path %>" role="button">Create an Event</a>
+    <a class="btn btn-secondary" href="<%= edit_user_path(@user) %>" role="button">Update Account</a>
+    <a class="btn btn-secondary" href="<%= events_path %>" role="button">Dashboard</a>
+		<a class="btn btn-secondary" href="<%= logout_path %>" role="button">Log Out</a>
+		&nbsp;
+  </form>
+</nav>
+
+<div class="row" style="font-family: Quicksand;">
+  <div class="col-md-6" style="padding-top:50px;  padding-left:150px;">
+  <% @events.each do |event| %>
+    <% if event.past_events != true  %>
+        <h2>Upcoming hosting events: </h2><br>
+        <%= link_to event.name, event_path(event) %><br>
+        Starts at: <%= event.date_format(event.start_date) %>
+      <% else %>
+        <h2>Events you've hosted:</h2>
+        <%= link_to event.name, event_path(event) %>
+        Ended on: <%= event.date_format(event.end_date) %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

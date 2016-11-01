@@ -34,13 +34,13 @@
     </div>
   </div>
     <label>Assign to: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
-  <select class ="btn-group" name="user_id">
+  <select class ="dropdown open" name="user_id">
     <% @users.each do |user| %>
       <option value="<%= user.id %>" >
         <%= user.name %> </option>
     <% end %>
   </select><br><br>
   <div class="col-xs-10">
-    <button class="btn btn-secondary" type="<%= f.submit %>"> Create Task </button> &nbsp;
+    <%= f.submit  class: ["btn btn-secondary"]%>
   </div>
   <% end %>

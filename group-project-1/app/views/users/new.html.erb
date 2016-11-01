@@ -39,7 +39,7 @@
     <%= f.password_field :password_confirmation %>
   </div><br><br>
   <div class="col-xs-10">
-    <button class="btn btn-secondary" type="<%= f.submit %>"> Sign Up </button>
+    <%= f.submit class: ["btn btn-secondary"] %>
 </div>
 
   <% end %>

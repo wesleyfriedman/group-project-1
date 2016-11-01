@@ -7,6 +7,9 @@ class Event < ApplicationRecord
 
 	validates :name, presence: true
 	validates :address, presence: true
+	validates :start_date, presence: true
+	validates :end_date, presence: true
+	validates :description, presence: true
 
 	def date_format(date)
 		date.strftime("%A - %B %y, %Y at %I:%M %p")

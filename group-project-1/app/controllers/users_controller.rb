@@ -2,8 +2,10 @@ class UsersController < ApplicationController
 	protect_from_forgery unless: -> { request.format.json? }
 	skip_before_action :require_login, only: [:new, :create]
 
-	# def index --> admin?
-	# end
+	def index
+		@user = current_user.id
+		@events = current_user.hosted_events
+	end
 
 	def show
 		@user = User.find(params[:id])

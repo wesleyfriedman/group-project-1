@@ -4,8 +4,7 @@ class EventsController < ApplicationController
 	require 'twitter'
 
 	def index
-		@events = current_user.events
-		@hosted_events = current_user.hosted_events
+		@user = current_user.id
 	end
 
 	def show
@@ -33,7 +32,7 @@ class EventsController < ApplicationController
 
 	def new
 		@event = Event.new
-		@user = current_user
+		@user = current_user.id 
 	end
 
 	def create

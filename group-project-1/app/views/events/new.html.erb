@@ -4,8 +4,7 @@
     <a class="btn btn-outline-info" href="<%= root_path %>" role="button" >ODDTER</a>
   </form>
   <form class="form-inline float-xs-right">
-    <a class="btn btn-secondary" href="<%= user_path(@user) %>" role="button" >Home</a>
-    <a class="btn btn-secondary" href="<%= edit_user_path(@user) %>" role="button">Update Account</a>
+    <a class="btn btn-secondary" href="<%= events_path %>" role="button">Dashboard</a>
     <a class="btn btn-secondary" href="<%= logout_path %>" role="button" >Log Out</a>
   </form>
 </nav>
@@ -53,7 +52,8 @@
       <%= f.text_area :description %>
     </div><br><br>
     <div class="col-xs-10">
-      <button class="btn btn-secondary" type=<%= f.submit %> Create Event </button>
+      <%= f.submit "Create Event", class: ["btn btn-secondary"] %>
+      <a class="btn btn-secondary" href="<%= user_path(@user) %>" role="button" >Cancel</a>
   </div>
   <% end %>
 </div>
