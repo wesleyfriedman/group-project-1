@@ -5,7 +5,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @event = event
   	@host = @user.find_host(@event)
-    @url  = 'http://localhost:3000/login'
+    @url  = 'https://oddter.herokuapp.com/login'
     @new_user = new_user
     mail(to: @user.email, subject: "You've been invited!")
   end
