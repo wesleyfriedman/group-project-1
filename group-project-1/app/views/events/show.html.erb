@@ -22,23 +22,30 @@
   <div class="col-md-8">
     <div class="col-md-8" style="padding-top:50px;  padding-left:50px;">
 
-      <h4><%= @event.name %></h4>
-      <% if EventsUser.find_by(event_id: @event.id, user_id: @user.id) %>
-        Hosted by: <%= @host.name %><br>
-      	Starts at: <%= @event.date_format(@event.start_date)%><br>
-      	Ends at: <%= @event.date_format(@event.end_date)%><br>
-      	Address: <%= @event.address %><br><br>
-      	<% if @user.id == @event.host %>
-  		<h4> Invite Guests: </h4>
-      		<%= form_tag(invite_event_path(@event)) do |f| %>
-      			<%= text_field_tag 'email' %>
-      			<%= hidden_field_tag 'event_id', @event.id %>
-      			<%= submit_tag 'Invite', class: ["btn btn-secondary btn-sm"] %>
-      		<% end %>
-      	<% end %>
-      	<% if flash[:notice] %>
-      		<div class="notice"><%= flash[:notice] %></div>
-      	<% end %><br>
+    <h4><%= @event.name %></h4>
+    <% if EventsUser.find_by(event_id: @event.id, user_id: @user.id) %>
+      Hosted by: <%= @host.name %><br>
+    	Starts at: <%= @event.date_format(@event.start_date)%><br>
+    	Ends at: <%= @event.date_format(@event.end_date)%><br>
+    	Address: <%= @event.address %><br><br>
+
+      <% if @user.id == @event.host %>
+          <h5> Invite Guests: </h5>
+          <%= form_tag(invite_event_path(@event)) do |f| %>
+            <%= text_field_tag 'email' %>
+            <%= hidden_field_tag 'event_id', @event.id %>
+            <%= check_box_tag 'new_user' %> new user
+            <%= submit_tag 'Invite' %>
+          <% end %>
+          <%= button_to "Create Task", new_event_task_path(@event.id), :method => 'get'  %>
+        <% end %>
+
+        <% if flash[:notice] %>
+          <div class="notice"><%= flash[:notice] %></div>
+        <% end %>
+
+
+
 
         <% if @tasks%>
         <h4><strong>Tasks</strong></h4>
@@ -57,28 +64,36 @@
           <% end %>
         <% end %><br>
 
-      <div class="col-md-4">
-        <h5> Attending: </h5>
-      	<% @accepted.each do |user| %>
-      		<ol style="padding-left:15px"><li ><%= user.name %></li></ol>
-      	<% end %>
-      </div>
-      <div class="col-md-4">
-        <h5> Invited: </h5>
-        <% @pending.each do |user| %>
-          <%= user.name %>
-        <% end %>
-      </div>
-      <div class="col-md-4">
-      	<h5> Not Attending: </h5>
-      	<% @declined.each do |user| %>
-      		<%= user.name %>
-      	<% end %>
-      </div>
-
-      <% end %>
+    <div class="col-md-4">
+      <h5> Attending: (<%= @accepted.length %>)</h5>
+      <ol>
+          <% @accepted.each do |user| %>
+            <li type="1"><%= user.name %>
+            <% if user.id == @event.host %>
+              (host)
+            <% end %>
+            </li>
+          <% end %>
+      </ol>
     </div>
+
+    <div class="col-md-4">
+      <h5> Invited: (<%= @pending.length %>)</h5>
+        <ul><% @pending.each do |user| %>
+          <li><%= user.name == "Fellow Oddter" ? user.email : user.name %></li>
+      <% end %></ul>
+    </div>
+
+    <div class="col-md-4">
+      <h5> Not Attending: (<%= @declined.length %>)</h5>
+        <ul><% @declined.each do |user| %>
+              <%= user.name %>
+            <% end %></ul>
+    </div>
+    <% end %>
+   </div>
   </div>
+
   <div class="col-md-4"  style="padding-top:50px;">
       <iframe
         width="400"

@@ -1,15 +1,14 @@
-class Invitation 
+class Invitation
 
-	attr_reader :user, :event 
+	attr_reader :event
 
-	def initialize(user, event)
-		@user = user
-		@event = event 
+	def initialize(event)
+		@event = event
 	end
 
 	def accepted_invitees
 		accepted_invitees_ids = EventsUser.where(event_id: @event.id, accepted: true).pluck(:user_id)
-		User.where(id: accepted_invitees_ids)
+		User.where("id in (?) or id = ?", accepted_invitees_ids, event.host)
 	end
 
 	def declined_invitees
@@ -19,7 +18,11 @@ class Invitation
 
 	def pending_invitees
 		pending_invitees_ids = EventsUser.where(event_id: @event.id, accepted: nil).pluck(:user_id)
-		User.where(id: pending_invitees_ids)
+		User.where("id in (?) and id != ?", pending_invitees_ids, event.host)
 	end
 
-end 
+	def exists?(user)
+		@event.users.include?(user)
+	end
+
+end

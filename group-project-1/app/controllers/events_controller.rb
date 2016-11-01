@@ -10,7 +10,7 @@ class EventsController < ApplicationController
 	def show
 		@event = Event.find(params[:id])
 		@user = current_user
-		invitation = Invitation.new(@user, @event)
+		invitation = Invitation.new(@event)
 		@accepted = invitation.accepted_invitees
 		@declined = invitation.declined_invitees
 		@pending = invitation.pending_invitees
@@ -71,20 +71,24 @@ class EventsController < ApplicationController
 	end
 
 	def invite
+		@event = Event.find(params[:id])
 		@user = User.find_by(email: params[:email])
-		unless @user
+		invitation = Invitation.new(@event)
+		if !@user && params[:new_user] == "1"
+			@user = User.create(name: "Fellow Oddter", email: params[:email], password: 'new_user', phone_number: "0123456789")
+			@user.events << @event
+			new_user = true
+			UserMailer.invitation_email(@user, @event, true).deliver_now
+			flash[:notice] = "Successfully invited #{@user.email}"
+		elsif !@user && params[:new_user] != "1"
 			fz=FuzzyMatch.new(User.all, :read => :email)
 			@user = fz.find(params[:email])
+			flash[:notice] = "Sorry, we couldn't find that user" unless @user
 		end
-		if @user
-			# byebug
-			@event = Event.find(params[:id])
+		if @user && !invitation.exists?(@user)
 			@user.events << @event
-			@host = @user.find_host(@event)
-			UserMailer.invitation_email(@user, @event, @host).deliver_now
+			UserMailer.invitation_email(@user, @event).deliver_now
 			flash[:notice] = "Successfully invited #{@user.email}"
-		else
-			flash[:notice] = "Sorry, we couldn't find that user"
 		end
 		redirect_back(fallback_location: root_path)
 	end

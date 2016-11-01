@@ -53,8 +53,18 @@ Phone Number: <%= number_to_phone(@user.phone_number, area_code: true) %><br><br
 	<h5> Attending: </h5>
 <% @accepted_events.each do |event| %>
 	<%= link_to event.name, event_path(event) %>
+
 <% end %>
 <br><br>
+
+	<%= form_tag "respond_to_invitation" do |f| %>
+		<%= hidden_field_tag 'user_id', @user.id %>
+		<%= hidden_field_tag 'event_id', event.id %>
+		<%= hidden_field_tag 'accept', false %>
+		<%= submit_tag 'decline invite' %>
+	<% end %>
+<% end %></ul>
+
 <h5> Invited: </h5>
 	<% @pending_events.each do |event| %>
 		<span>
@@ -79,5 +89,24 @@ Phone Number: <%= number_to_phone(@user.phone_number, area_code: true) %><br><br
 			<% end %>
 		</span>
 	<% end %>
+</ul>
+
+<h5> Declined: </h5>
+<ul>
+	<% @declined_events.each do |event| %>
+		<span>
+			<%= link_to event.name, event_path(event) %>
+		</span>
+
+		<span>
+			<%= form_tag "respond_to_invitation" do |f| %>
+				<%= hidden_field_tag 'user_id', @user.id %>
+				<%= hidden_field_tag 'event_id', event.id %>
+				<%= hidden_field_tag 'accept', true %>
+				<%= submit_tag 'accept invite' %>
+			<% end %>
+		</span>
+	<% end %>
+</ul>
 </div>
 </div>

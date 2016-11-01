@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
 	has_many :events, through: :events_users
 	has_many :tasks
-	has_many :events_users
+	has_many :events_users, dependent: :destroy
 
 	validates :name, presence: true
 	validates :email, uniqueness: true
