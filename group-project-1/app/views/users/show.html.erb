@@ -14,99 +14,82 @@
 
 <div style="font-family: Quicksand;">
   <div class="col-xs-6" style="padding-top:50px;  padding-left:150px;">
-  <h4><strong>Hey Beautiful</strong></h4>
-Name: <%= @user.name %><br>
-Email: <%= @user.email %><br>
-Phone Number: <%= number_to_phone(@user.phone_number, area_code: true) %><br><br>
 
-	<h4><strong>Tasks</strong></h4>
+    <h4><strong>Hey Beautiful</strong></h4>
+    Name: <%= @user.name %><br>
+    Email: <%= @user.email %><br>
+    Phone Number: <%= number_to_phone(@user.phone_number, area_code: true) %><br><br>
 
-	<% @user.tasks.each do |task| %>
-	  <% if task.complete != true && task.event != nil%>
-	  <strong><%= task.find_event(task.event_id) %></strong>:
-	  <%= task.description %><br>
-	  <%= button_to "Mark Complete", complete_path, params: {id: task.id}, class: ["btn btn-outline-success btn-sm"] %>
-	  <% elsif task.event != nil%>
-	  <del><strong><%= task.find_event(task.event_id) %></strong>: <%= task.description %></del><br>
-	  <% end %>
-	<% end %>
+  	<h4><strong>Tasks</strong></h4>
 
-</div>
+  	<% @user.tasks.each do |task| %>
+  	  <% if task.complete != true && task.event != nil%>
+    	  <strong><%= task.find_event(task.event_id) %></strong>:
+    	  <%= task.description %><br>
+    	  <%= button_to "Mark Complete", complete_path, params: {id: task.id}, class: ["btn btn-outline-success btn-sm"] %>
+  	  <% elsif task.event != nil%>
+    	  <del><strong><%= task.find_event(task.event_id) %></strong>: <%= task.description %></del><br>
+  	  <% end %>
+  	<% end %>
+  </div>
 
-<div class="col-xs-6" style="padding-top:50px;  padding-left:0px;">
-	<h4><strong>Events</strong></h4>
-  Upcoming Events: <br>
-	<% @user.events.each do |event| %>
-    <% if event.past_events != true  %>
-  		<%= link_to event.name, event_path(event) %><br>
-  		Address: <%= event.address %><br>
-  		Starts at: <%= event.date_format(event.start_date) %><br>
-  		Ends at: <%= event.date_format(event.end_date) %><br>
-    <% else %>
-      Past Events:
-      <%= link_to event.name, event_path(event) %><br>
-      Address: <%= event.address %><br>
-      Ended: <%= event.date_format(event.end_date) %><br>
+  <div class="col-xs-6" style="padding-top:50px;  padding-left:0px;">
+
+  	<h4><strong>Events</strong></h4>
+    <h5> Attending: </h5>
+    <% @accepted_events.each do |event| %>
+      <%= link_to event.name, event_path(event) %><br><br>
+      <%= form_tag 'respond_to_invitation' do |f| %>
+        <%= hidden_field_tag 'user_id', @user.id %>
+        <%= hidden_field_tag 'event_id', event.id %>
+        <%= hidden_field_tag 'accept', false %>
+        <%= submit_tag 'decline invite' %>
+      <% end %>
     <% end %>
-	<% end %><br>
 
-	<h5> Attending: </h5>
-<% @accepted_events.each do |event| %>
-	<%= link_to event.name, event_path(event) %>
-
-<% end %>
-<br><br>
-
-	<%= form_tag "respond_to_invitation" do |f| %>
-		<%= hidden_field_tag 'user_id', @user.id %>
-		<%= hidden_field_tag 'event_id', event.id %>
-		<%= hidden_field_tag 'accept', false %>
-		<%= submit_tag 'decline invite' %>
-	<% end %>
-<% end %></ul>
-
-<h5> Invited: </h5>
-	<% @pending_events.each do |event| %>
-		<span>
-			<%= link_to event.name, event_path(event) %>
+    <h5> Invited: </h5>
+  	<% @pending_events.each do |event| %>
+  		<span><%= link_to event.name, event_path(event) %></span>
+    <span>
+  		<%= form_tag 'respond_to_invitation' do |f| %>
+  			<%= hidden_field_tag 'user_id', @user.id %>
+  			<%= hidden_field_tag 'event_id', event.id %>
+  			<%= hidden_field_tag 'accept', true %>
+  			<%= submit_tag 'accept invite', class: ["btn btn-secondary btn-sm"] %>
+  		<% end %>
 		</span>
 
-		<span>
-			<%= form_tag "respond_to_invitation" do |f| %>
-				<%= hidden_field_tag 'user_id', @user.id %>
-				<%= hidden_field_tag 'event_id', event.id %>
-				<%= hidden_field_tag 'accept', true %>
-				<%= submit_tag 'accept invite', class: ["btn btn-secondary btn-sm"] %>
-			<% end %>
-		</span>
+  		<span>
+  		<%= form_tag 'respond_to_invitation' do |f| %>
+  			<%= hidden_field_tag 'user_id', @user.id %>
+  			<%= hidden_field_tag 'event_id', event.id %>
+  			<%= hidden_field_tag 'accept', false %>
+  			<%= submit_tag 'decline invite' , class: ["btn btn-secondary btn-sm"]%>
+  		<% end %>
+  		</span>
+    <% end %>
 
-		<span>
-			<%= form_tag "respond_to_invitation" do |f| %>
-				<%= hidden_field_tag 'user_id', @user.id %>
-				<%= hidden_field_tag 'event_id', event.id %>
-				<%= hidden_field_tag 'accept', false %>
-				<%= submit_tag 'decline invite' , class: ["btn btn-secondary btn-sm"]%>
-			<% end %>
-		</span>
-	<% end %>
-</ul>
+    <h5> Declined: </h5>
+  	<% @declined_events.each do |event| %>
+  		<span><%= link_to event.name, event_path(event) %></span>
 
-<h5> Declined: </h5>
-<ul>
-	<% @declined_events.each do |event| %>
-		<span>
-			<%= link_to event.name, event_path(event) %>
-		</span>
+  		<span>
+  		<%= form_tag 'respond_to_invitation' do |f| %>
+  			<%= hidden_field_tag 'user_id', @user.id %>
+  			<%= hidden_field_tag 'event_id', event.id %>
+  			<%= hidden_field_tag 'accept', true %>
+  			<%= submit_tag 'accept invite' %>
+  		<% end %>
+  		</span>
+	  <% end %>
 
-		<span>
-			<%= form_tag "respond_to_invitation" do |f| %>
-				<%= hidden_field_tag 'user_id', @user.id %>
-				<%= hidden_field_tag 'event_id', event.id %>
-				<%= hidden_field_tag 'accept', true %>
-				<%= submit_tag 'accept invite' %>
-			<% end %>
-		</span>
-	<% end %>
-</ul>
-</div>
+      <h5>Past Events: </h5>
+    	<% @user.events.each do |event| %>
+        <% if event.past_events == true  %>
+          <%= link_to event.name, event_path(event) %><br>
+          Address: <%= event.address %><br>
+          Ended: <%= event.date_format(event.end_date) %><br>
+        <% end %>
+    	<% end %><br>
+  </div>
 </div>

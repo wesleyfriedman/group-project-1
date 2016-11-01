@@ -35,23 +35,19 @@
             <%= text_field_tag 'email' %>
             <%= hidden_field_tag 'event_id', @event.id %>
             <%= check_box_tag 'new_user' %> new user
-            <%= submit_tag 'Invite' %>
+            <%= submit_tag 'Invite', class: ["btn btn-secondary btn-sm"] %>
           <% end %>
-          <%= button_to "Create Task", new_event_task_path(@event.id), :method => 'get'  %>
         <% end %>
 
         <% if flash[:notice] %>
           <div class="notice"><%= flash[:notice] %></div>
         <% end %>
 
-
-
-
         <% if @tasks%>
         <h4><strong>Tasks</strong></h4>
-        <% if @user.id == @event.host %>
-        <%= button_to "Create Task", new_event_task_path(@event.id), :method => 'get', class: ["btn btn-secondary btn-sm"]%>
-        <% end %><br>
+          <% if @user.id == @event.host %>
+            <%= button_to "Create Task", new_event_task_path(@event.id), :method => 'get', class: ["btn btn-secondary btn-sm"]%>
+          <% end %><br>
           <% @tasks.each do |task| %>
             <% if task.complete != true %>
               <%= task.find_user %>:
