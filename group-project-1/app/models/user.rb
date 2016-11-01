@@ -4,6 +4,7 @@ class User < ApplicationRecord
 	has_many :events, through: :events_users
 	has_many :tasks
 	has_many :events_users, dependent: :destroy
+	#  has_many :hosted_events, classname: "Event", foreign_key: "host_id"
 
 	validates :name, presence: true
 	validates :email, uniqueness: true
