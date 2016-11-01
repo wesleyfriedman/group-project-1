@@ -38,11 +38,11 @@
             <%= submit_tag 'Invite', class: ["btn btn-secondary btn-sm"] %>
           <% end %>
         <% end %>
-
+<br>
         <% if flash[:notice] %>
           <div class="notice"><%= flash[:notice] %></div>
         <% end %>
-
+<br>
         <% if @tasks%>
         <h4><strong>Tasks</strong></h4>
           <% if @user.id == @event.host %>
@@ -52,7 +52,8 @@
             <% if task.complete != true %>
               <%= task.find_user %>:
               <%= task.description %><br>
-              <%= button_to "Mark Complete", complete_path, params: {id: task.id}, class: ["btn btn-outline-success btn-sm"]%><br>
+              <% if @user.id == task.id %>
+              <%= button_to "Mark Complete", complete_path, params: {id: task.id}, class: ["btn btn-outline-success btn-sm"]%><% end %><br>
             <% else %>
               <del><%= task.find_user %>:
               <%= task.description %></del><br>
@@ -60,31 +61,29 @@
           <% end %>
         <% end %><br>
 
-    <div class="col-md-4">
+    <div class="col-md-3" style="padding-left:0px">
       <h5> Attending: (<%= @accepted.length %>)</h5>
-      <ol>
           <% @accepted.each do |user| %>
-            <li type="1"><%= user.name %>
+            <li style="list-style: none;"><%= user.name %>
             <% if user.id == @event.host %>
               (host)
             <% end %>
             </li>
           <% end %>
-      </ol>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-7">
       <h5> Invited: (<%= @pending.length %>)</h5>
-        <ul><% @pending.each do |user| %>
-          <li><%= user.name == "Fellow Oddter" ? user.email : user.name %></li>
-      <% end %></ul>
+        <% @pending.each do |user| %>
+          <li style="list-style: none;"><%= user.name == "Fellow Oddter" ? user.email : user.name %></li>
+      <% end %>
     </div>
 
-    <div class="col-md-4">
-      <h5> Not Attending: (<%= @declined.length %>)</h5>
-        <ul><% @declined.each do |user| %>
+    <div class="col-md-2">
+      <h5> Declined: (<%= @declined.length %>)</h5>
+        <% @declined.each do |user| %>
               <%= user.name %>
-            <% end %></ul>
+            <% end %>
     </div>
     <% end %>
    </div>
@@ -101,3 +100,4 @@
   </div>
 </div>
 </div>
+<br><br><br>

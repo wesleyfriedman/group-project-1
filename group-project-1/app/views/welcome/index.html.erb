@@ -2,16 +2,20 @@
 
   <nav class="navbar navbar-light" style="background-color: transparent; font-family: Quicksand;">
     <form class="form-inline float-xs-right">
-      <% if !session[:user_id]%>
+      <% if !current_user %>
 	      <a class="btn btn-secondary" href="<%= new_user_path %>" role="button">Sign Up</a>
 	      <a class="btn btn-secondary" href="<%= login_path %>" role="button">Login</a>
 	  <% else %>
-	  	  <a class="btn btn-secondary" href="<%= user_path(session[:user_id]) %>" role="button">Home</a>
+	  	  <a class="btn btn-secondary" href="<%= user_path(current_user) %>" role="button">Home</a>
 	  <% end %>
     </form>
   </nav>
 
     <h1 class="display-3" style="font-family: Quicksand ;">ODDTER</h1>
     <p class="lead" style="font-family: Quicksand ;">Your significant otter.</p>
+
   <hr class="my-2">
+<div align="right" style="padding-right: 220px">
+  <img src="https://s-media-cache-ak0.pinimg.com/originals/92/2e/b4/922eb44a4ca0c95879af02a8fd90b5f1.jpg" style="width:200px;height:228px;">
+</div>
 </div>

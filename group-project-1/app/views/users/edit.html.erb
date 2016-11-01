@@ -13,7 +13,7 @@
 <!-- nav bar -->
 <div class="container" style="padding-top:10px; font-family: Quicksand;">
   <h1>Update User</h1>
-<!-- erros -->
+<!-- errors -->
   <% if @user.errors.any? %>
    <div id="error_explanation">
     <h4><%= pluralize(@user.errors.count, "error") %>prohibited this user from being saved:</h4>
@@ -23,40 +23,28 @@
    </div>
   <% end %><br>
 <!-- errors -->
-  <div class="form-group row">
-    <%= form_for @user do |f| %>
-    <label class="col-xs-2 col-form-label">Name:</label>
-    <div class="col-xs-10">
-      <%= f.text_field :name %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-xs-2 col-form-label">Email :</label>
-    <div class="col-xs-10">
-      <%= f.email_field :email%></div>
-  </div>
-  <div class="form-group row">
-    <label class="col-xs-2 col-form-label">Phone Number:</label>
-    <div class="col-xs-10">
-      <%= f.telephone_field :phone_number%>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-xs-2 col-form-label">Password:</label>
-    <div class="col-xs-10">
-      <%= f.password_field :password %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label class="col-xs-2 col-form-label">  Confirmation:</label>
-    <div class="col-xs-10">
-      <%= f.password_field :password_confirmation %>
-    </div><br><br>
-  <div class="col-xs-10">
-    <button class="btn btn-secondary" type=<%= f.submit %> Update </button>
-    <a class="btn btn-secondary" href="<%= user_path(@user) %>" role="button" >Cancel</a>
-    <%= button_to "Delete Account", @user, method: :delete, class: ["btn btn-outline-danger"]  %>
+<div class="col-xs-4" >
+  <div class="form-group">
+  <%= form_for @user do |f| %>
+    <label class="col-form-label">Name:</label>
+    <%= f.text_field :name, class: "form-control" %>
 
-  </div>
+    <label class="col-form-label">Email:</label>
+    <%= f.email_field :email, class: "form-control" %>
+
+    <label class="col-form-label">Phone Number:</label>
+    <%= f.telephone_field :phone_number, class: "form-control" %>
+
+    <label class="col-form-label">Password:</label>
+    <%= f.password_field :password, class: "form-control"  %>
+
+    <label class="col-form-label">Confirmation:</label>
+    <%= f.password_field :password_confirmation, class: "form-control"  %><br>
+
+    <%= f.submit "Update User", class: ["btn btn-secondary"] %>
     <% end %>
+    <a class="btn btn-secondary" href="<%= user_path(@user) %>" role="button">Cancel</a>
+    <%= button_to "Delete", @user, method: :delete, class: ["btn btn-outline-danger btn-sm"]  %>
+</div>
+</div>
 </div>

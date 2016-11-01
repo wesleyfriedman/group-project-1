@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   before_action :require_login
-  helper_method :logged_in?
+  helper_method :logged_in?, :current_user
 
   def current_user
   	if session[:user_id]

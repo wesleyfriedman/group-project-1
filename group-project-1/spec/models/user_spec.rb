@@ -2,50 +2,41 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
- before :each do
-    user = User.create(
-      :name => "Jeff",
-      :tickets => 5,
-      :nausea_rating => 2,
-      :happiness_rating => 4,
-      :min_height => 32
-    )
-  end
-
-end
-
-
-# user is invited to only one event
-
-RSpec.describe Attraction, :type => :model do
   before :each do
-    @attraction = Attraction.create(
-      :name => "Roller Coaster",
-      :tickets => 5,
-      :nausea_rating => 2,
-      :happiness_rating => 4,
-      :min_height => 32
-    )
+    @user = User.create(
+      id: 1,
+      name: "Jeff",
+      email: "jeff@flatiron.com",
+      phone_number: "3459806254",
+      password: "railsrules"
+      )
+    @event = Event.create(
+      id: 1,
+      name: "Party",
+      host: 1,
+      address: "11 Broadway, NY, NY",
+      start_date: DateTime.now,
+      end_date: DateTime.now.tomorrow.to_date, description: "Good vibes"
+      )
+    @task = Task.create(
+      id: 1,
+      name: "Cups",
+      description: "get cups",
+      user_id: 1,
+      event_id: 1,
+      complete: false
+      )
   end
 
-  it "is valid with a name, min_height, nausea_rating, happiness_rating, and ticket number" do
-    expect(@attraction).to be_valid
+  it "has an event if host" do
+    @user.events << @event
+    expect(@user.events.count).to eq(1)
   end
 
-  it "has many rides" do
-    user = User.create(name: "Max Charles")
-    ride = Ride.create(user_id: user.id, attraction_id: @attraction.id)
-    expect(@attraction.rides.first).to eq(ride)
+  it "can find hosted events" do
+    @user.events << @event 
+    @event.host = @user.id
+    expect(@user.hosted_events.first).to eq(@event)
   end
-
-  it "has many users through rides" do
-    max = User.create(name: "Max Charles", password: "password")
-    skai = User.create(name: "Skai Jackson", password: "password")
-    @attraction.users << [max, skai]
-    expect(@attraction.users.first).to eq(max)
-    expect(@attraction.users.last).to eq(skai)
-  end
-
-end
 
 end

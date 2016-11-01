@@ -8,7 +8,7 @@ class EventsController < ApplicationController
 	end
 
 	def show
-		@event = Event.find(params[:id])
+		@event = Event.find(params[:id]) 
 		@user = current_user
 		invitation = Invitation.new(@event)
 		@accepted = invitation.accepted_invitees

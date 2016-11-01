@@ -14,15 +14,18 @@
 
 <div class="row" style="font-family: Quicksand;">
   <div class="col-md-6" style="padding-top:50px;  padding-left:150px;">
-  <% @events.each do |event| %>
-    <% if event.past_events != true  %>
-        <h2>Upcoming hosting events: </h2><br>
+    <h2>Upcoming hosting events: </h2><br>
+      <% @events.each do |event| %>
+        <% if event.past_events != true  %>
+          <%= link_to event.name, event_path(event) %><br>
+          Starts at: <%= event.date_format(event.start_date) %><br>
+        <% end %>
+      <% end %><br>
+    <h2>Events you've hosted:</h2><br>
+    <% @events.each do |event| %>
+      <% if event.past_events == true  %>
         <%= link_to event.name, event_path(event) %><br>
-        Starts at: <%= event.date_format(event.start_date) %>
-      <% else %>
-        <h2>Events you've hosted:</h2>
-        <%= link_to event.name, event_path(event) %>
-        Ended on: <%= event.date_format(event.end_date) %>
+        Ended on: <%= event.date_format(event.end_date) %><br>
       <% end %>
     <% end %>
   </div>

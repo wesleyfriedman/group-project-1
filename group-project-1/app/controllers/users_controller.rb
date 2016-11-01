@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
 	def show
 		@user = User.find(params[:id])
+		@events = @user.hosted_events
 		accepted_events_ids = EventsUser.where(user_id: @user.id, accepted: true).pluck(:event_id)
 		pending_events_ids = EventsUser.where(user_id: @user.id, accepted: nil).pluck(:event_id)
 		declined_events_ids = EventsUser.where(user_id: @user.id, accepted: false).pluck(:event_id)
@@ -45,13 +46,14 @@ class UsersController < ApplicationController
 	def update
 		@user = User.find(params[:id])
 		if @user.update(user_params)
-			redirect_to @user
+			redirect_to user_path(@user)
 		else
 			render :edit
 		end
 	end
 
 	def destroy
+		session[:user_id] = nil 
 		User.find(params[:id]).destroy
 		redirect_to root_path
 	end
