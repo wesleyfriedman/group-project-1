@@ -3,7 +3,7 @@ class Event < ApplicationRecord
 	has_many :users, through: :events_users
 	has_many :tasks
 	has_many :supplies, through: :tasks
-	has_many :events_users
+	has_many :events_users, dependent: :destroy
 
 	validates :name, presence: true
 	validates :address, presence: true

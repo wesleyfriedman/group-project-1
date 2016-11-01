@@ -34,6 +34,7 @@
 		<%= form_tag(invite_event_path(@event)) do |f| %>
 			<%= text_field_tag 'email' %>
 			<%= hidden_field_tag 'event_id', @event.id %>
+      <%= check_box_tag 'new_user' %> new user
 			<%= submit_tag 'Invite' %>
 		<% end %>
 		<%= button_to "Create Task", new_event_task_path(@event.id), :method => 'get'  %>
@@ -43,19 +44,25 @@
 		<div class="notice"><%= flash[:notice] %></div>
 	<% end %>
 
-	<h5> Attending: </h5>
-	<% @accepted.each do |user| %>
-		<ol type="1"><%= user.name %></ol>
-	<% end %>
+	<h5> Attending: (<%= @accepted.length %>)</h5>
+	<ol>
+    <% @accepted.each do |user| %>
+		  <li type="1"><%= user.name %>
+      <% if user.id == @event.host %>
+        (host)
+      <% end %>
+      </li>
+	  <% end %>
+  </ol>
 
-	<h5> Not Attending: </h5>
+	<h5> Not Attending: (<%= @declined.length %>)</h5>
 	<ul><% @declined.each do |user| %>
 		<%= user.name %>
 	<% end %></ul>
 
-	<h5> Invited: </h5>
+	<h5> Invited: (<%= @pending.length %>)</h5>
 	<ul><% @pending.each do |user| %>
-		<li><%= user.name %></li>
+		<li><%= user.name == "Fellow Oddter" ? user.email : user.name %></li>
 	<% end %></ul>
 
   <% if @tasks%>
