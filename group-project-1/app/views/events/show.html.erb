@@ -52,8 +52,9 @@
             <% if task.complete != true %>
               <%= task.find_user %>:
               <%= task.description %><br>
-              <% if @user.id == task.id %>
-              <%= button_to "Mark Complete", complete_path, params: {id: task.id}, class: ["btn btn-outline-success btn-sm"]%><% end %><br>
+                <% if @user.id == task.id %>
+                <%= button_to "Mark Complete", complete_path, params: {id: task.id}, class: ["btn btn-outline-success btn-sm"]%>
+                <% end %><br>
             <% else %>
               <del><%= task.find_user %>:
               <%= task.description %></del><br>
