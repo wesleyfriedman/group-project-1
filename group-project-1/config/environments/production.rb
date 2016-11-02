@@ -6,13 +6,13 @@ config.action_mailer.perform_deliveries = true
 config.action_mailer.raise_delivery_errors = false
 config.action_mailer.default :charset => "utf-8"
 config.action_mailer.smtp_settings = {
-  address: "smtp.gmail.com",
+  address: "smtp.sendgrid.net",
   port: 587,
   domain: "http://oddter.herokuapp.com/",
   authentication: "plain",
   enable_starttls_auto: true,
-  user_name: ENV['GMAIL_USERNAME_DEV'],
-  password: ENV['GMAIL_PASSWORD_DEV']
+  user_name: ENV['SENDGRID_USERNAME'],
+  password: ENV['SENDGRID_PASSWORD']
 }
   # Code is not reloaded between requests.
   config.cache_classes = true
