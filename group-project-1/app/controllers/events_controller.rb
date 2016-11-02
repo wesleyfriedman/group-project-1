@@ -75,22 +75,29 @@ class EventsController < ApplicationController
 		@user = User.find_by(email: params[:email])
 		invitation = Invitation.new(@event)
 		if @user && !invitation.exists?(@user)
+			# byebug
 			@user.events << @event
 			UserMailer.invitation_email(@user, @event).deliver_now
 			flash[:notice] = "Successfully invited #{@user.email}"
 		elsif !@user && params[:new_user] != "1"
+			# byebug
 			# fz=FuzzyMatch.new(User.all, :read => :email)
 			# @user = fz.find(params[:email])
 			flash[:notice] = "Sorry, we couldn't find that user" unless @user
-		else
+		elsif !@user && params[:new_user] == "1"
+			# byebug
 			!@user && params[:new_user] == "1"
 			@user = User.create(name: "Fellow Oddter", email: params[:email], password: 'new_user', phone_number: "0123456789")
 			@user.events << @event
 			new_user = true
 			UserMailer.invitation_email(@user, @event, true).deliver_now
 			flash[:notice] = "Successfully invited #{@user.email}"
+		elsif @user && params[:new_user] == "1"
+			flash[:notice] = "That user exists and is already invited."
+		elsif @user
+			flash[:notice] = "That user is already invited."
 		end
-		redirect_to :back
+		redirect_to event_path(@event)
 	end
 
 	private

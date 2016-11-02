@@ -66,7 +66,7 @@ class UsersController < ApplicationController
 			@events_user.accepted = false
 		end
 		@events_user.save
-		redirect_to :back
+		redirect_to user_path(@events_user.user)
 	end
 
 	private
